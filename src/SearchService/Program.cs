@@ -8,6 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+//configure Poli retry policy
 builder.Services.AddHttpClient<AuctionSvcHttpClient>().AddPolicyHandler(GetPolicy());
 
 var app = builder.Build();
@@ -31,8 +33,10 @@ app.Lifetime.ApplicationStarted.Register(async () =>
 
 app.Run();
 
+//Poly configuration
 static IAsyncPolicy<HttpResponseMessage> GetPolicy()
     => HttpPolicyExtensions
         .HandleTransientHttpError()
         .OrResult(msg => msg.StatusCode == HttpStatusCode.NotFound)
+        //.WaitAndRetryAsync(5, _=> TimeSpan.FromSeconds(3));
         .WaitAndRetryForeverAsync(_ => TimeSpan.FromSeconds(3));
