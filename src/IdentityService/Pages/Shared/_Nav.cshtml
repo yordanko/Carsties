@@ -1,7 +1,6 @@
 @using Duende.IdentityServer.Extensions
 @{
-    #nullable enable
-    string? name = null;
+    string name = "";
     if (!true.Equals(ViewData["signed-out"]))
     {
         name = Context.User?.GetDisplayName();

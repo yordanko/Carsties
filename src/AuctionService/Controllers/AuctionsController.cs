@@ -74,6 +74,7 @@ public class AuctionsController : ControllerBase
             new {auction.Id}, newAuction);
     }
 
+    [Authorize]
     [HttpPut("{id}")]
     public async Task<ActionResult> UpdateAuction(Guid id, UpdateAuctionDto updateAuctionDto)
     {
@@ -100,6 +101,7 @@ public class AuctionsController : ControllerBase
         return BadRequest("Problem saving changes");
     }
 
+    [Authorize]
     [HttpDelete("{id}")]
     public async Task<ActionResult> DeleteAuction(Guid id)
     {
