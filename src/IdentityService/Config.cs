@@ -42,6 +42,7 @@ public static class Config
                 AllowedScopes = {"openid", "profile", "auctionApp"},
                 AccessTokenLifetime = 3600*24*30
             },
+            //Built in code examples next
             // m2m client credentials flow client
             new Client
             {

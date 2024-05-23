@@ -16,19 +16,23 @@ public class Index : PageModel
 
     public async Task<IActionResult> OnGet()
     {
-        var localAddresses = new List<string> { "127.0.0.1", "::1" };
+        //NOTE: this is list of container ip addresses.
+        var localAddresses = new List<string> { "::ffff:172.26.0.5", "127.0.0.1", "::1" };
         if(HttpContext.Connection.LocalIpAddress != null)
         {
             localAddresses.Add(HttpContext.Connection.LocalIpAddress.ToString());
         }
-
-        if (!localAddresses.Contains(HttpContext.Connection.RemoteIpAddress?.ToString()))
+        //if run in Docker add it to local addresses
+        if(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Docker"
+        && !localAddresses.Contains(HttpContext.Connection.RemoteIpAddress?.ToString()))
         {
-            return NotFound();
+            localAddresses.Add(HttpContext.Connection.RemoteIpAddress.ToString());
         }
 
         View = new ViewModel(await HttpContext.AuthenticateAsync());
-            
+        View.IpAddress = HttpContext.Connection.LocalIpAddress?.ToString();
+
+
         return Page();
     }
 }

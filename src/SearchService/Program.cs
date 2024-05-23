@@ -21,28 +21,19 @@ builder.Services.AddMassTransit(x=>
     x.SetEndpointNameFormatter(new KebabCaseEndpointNameFormatter("search", false));
     x.UsingRabbitMq((context, cfg)=>
     {
+        cfg.Host(builder.Configuration["RabbitMq:Host"], "/", host =>
+        {
+            host.Username(builder.Configuration.GetValue("RabbitMq:Username", "guest"));
+            host.Password(builder.Configuration.GetValue("RabbitMq:Password", "guest"));
+        });
         //configure retry attemps if databse is down
-        //NOTE: This retry is configured for specific queue and specific consumer
+        //NOTE: This retry is configured only for create queue!
         cfg.ReceiveEndpoint("search-action-created", e =>
         {
             e.UseMessageRetry(r=>r.Interval(5,5));
             //specific consumer
             e.ConfigureConsumer<ActionCreatedConsumer>(context);
         });
-
-        // cfg.ReceiveEndpoint("search-action-updated", e =>
-        // {
-        //     e.UseMessageRetry(r=>r.Interval(5,5));
-        //     //specific consumer
-        //     e.ConfigureConsumer<ActionUpdatedConsumer>(context);
-        // });
-
-        // cfg.ReceiveEndpoint("search-action-deleted", e =>
-        // {
-        //     e.UseMessageRetry(r=>r.Interval(5,5));
-        //     //specific consumer
-        //     e.ConfigureConsumer<ActionDeletedConsumer>(context);
-        // });
         cfg.ConfigureEndpoints(context);
     } );
 });

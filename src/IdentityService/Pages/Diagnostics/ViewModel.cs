@@ -29,4 +29,5 @@ public class ViewModel
 
     public AuthenticateResult AuthenticateResult { get; }
     public IEnumerable<string> Clients { get; }
+    public string IpAddress { get; set; }
 }

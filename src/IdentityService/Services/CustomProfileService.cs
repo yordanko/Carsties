@@ -11,6 +11,10 @@ using Microsoft.AspNetCore.Identity;
 
 namespace IdentityService.Services
 {
+    /// <summary>
+    /// NOTE: This class inherits from IProfileService and overrides GetProfileDataAsync
+    /// This class will add additional claims to default claims in IdentityServer
+    /// </summary>
     public class CustomProfileService : IProfileService
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -19,6 +23,12 @@ namespace IdentityService.Services
         {
             _userManager = userManager;
         }
+
+        /// <summary>
+        /// Implement this method to add additional claims to JWT tocken
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
         public async Task GetProfileDataAsync(ProfileDataRequestContext context)
         {
             var user = await _userManager.GetUserAsync(context.Subject);
