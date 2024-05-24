@@ -22,7 +22,7 @@ services:
       - 5672:5672
       - 15672:15672
   auction-svc:
-    image: yordanko/auction-svc:latest
+    image: yordy/auction-svc:latest
     build:
       context: .
       dockerfile: src/AuctionService/Dockerfile
@@ -38,7 +38,7 @@ services:
       - postgres
       - rabbitmq
   search-svc:
-    image: yordanko/search-svc:latest
+    image: yordy/search-svc:latest
     build:
       context: .
       dockerfile: src/SearchService/Dockerfile
@@ -56,7 +56,7 @@ services:
       - rabbitmq
 
   identity-svc:
-    image: yordanko/identity-svc:latest
+    image: yordy/identity-svc:latest
     build:
       context: .
       dockerfile: src/IdentityService/Dockerfile
@@ -70,7 +70,7 @@ services:
       - postgres
   
   gateway-svc:
-    image: yordanko/gateway-svc:latest
+    image: yordy/gateway-svc:latest
     build:
       context: .
       dockerfile: src/GatewayService/Dockerfile
