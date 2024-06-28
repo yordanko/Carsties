@@ -17,7 +17,10 @@ builder.Services.AddHttpClient<AuctionSvcHttpClient>().AddPolicyHandler(GetPolic
 //Configure MassTransit
 builder.Services.AddMassTransit(x=>
 {
+    //specify where to find MassTransit consumers objects
     x.AddConsumersFromNamespaceContaining<ActionCreatedConsumer>();
+
+    //add dashes in formater as "a-b-c" for consumer names
     x.SetEndpointNameFormatter(new KebabCaseEndpointNameFormatter("search", false));
     x.UsingRabbitMq((context, cfg)=>
     {
@@ -26,8 +29,8 @@ builder.Services.AddMassTransit(x=>
             host.Username(builder.Configuration.GetValue("RabbitMq:Username", "guest"));
             host.Password(builder.Configuration.GetValue("RabbitMq:Password", "guest"));
         });
-        //configure retry attemps if databse is down
-        //NOTE: This retry is configured only for create queue!
+        // Note - Data consistency: Configure retry attemps if databse (Mongo) is down
+        // This retry is configured only for create queue!
         cfg.ReceiveEndpoint("search-action-created", e =>
         {
             e.UseMessageRetry(r=>r.Interval(5,5));
@@ -45,6 +48,8 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+//Hook to lifetime to register service first before start application at line app.Run(). 
+//This way if search service will start if action service is down
 app.Lifetime.ApplicationStarted.Register(async () =>
 {
     try

@@ -17,6 +17,9 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 //Configure MassTransit
 builder.Services.AddMassTransit(x=>
 {
+
+    //MassTransit.EntityFrameworkCore. 
+    //Data consistancy. Setup messages Outbox, so we do not lose a message
     x.AddEntityFrameworkOutbox<AuctionDbContext>(o=>
     {
         o.QueryDelay = TimeSpan.FromSeconds(10);
@@ -24,7 +27,10 @@ builder.Services.AddMassTransit(x=>
         o.UseBusOutbox();
 
     });
+    // specify where to find MassTransit consumers objects 
     x.AddConsumersFromNamespaceContaining<AuctionFinishedConsumer>();
+    
+    //add dashes in formater as "a-b-c" for consumer names
     x.SetEndpointNameFormatter(new KebabCaseEndpointNameFormatter("auction", false));
 
     x.UsingRabbitMq((context, cfg)=>

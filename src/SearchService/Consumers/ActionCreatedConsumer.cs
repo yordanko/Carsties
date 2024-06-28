@@ -9,6 +9,7 @@ using MongoDB.Entities;
 
 namespace SearchService.Consumers
 {
+    //NOTE: MassTransit is convention based and expects our events (the one in Contracts) to end with Consumer
     public class ActionCreatedConsumer : IConsumer<AuctionCreated>
     {
         private readonly IMapper _mapper;

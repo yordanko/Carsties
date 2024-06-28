@@ -5,6 +5,7 @@ using MassTransit;
 
 namespace AuctionService.Consumers
 {
+    //NOTE: Thsi is part of data consistency.  
     public class AuctionFinishedConsumer : IConsumer<AuctionFinished>
     {
         private readonly AuctionDbContext _dbContext;

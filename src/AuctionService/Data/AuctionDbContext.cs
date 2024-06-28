@@ -15,7 +15,7 @@ public class AuctionDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        //add tables needed to implement Rabbit outbox fallout 
+        //Note: Add tables needed to implement MassTransit outbox fallout 
         modelBuilder.AddInboxStateEntity();
         modelBuilder.AddOutboxMessageEntity();
         modelBuilder.AddOutboxStateEntity();
