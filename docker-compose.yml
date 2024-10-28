@@ -1,6 +1,6 @@
 services:
   postgres:
-    image: yordy/postgres:v16.1
+    image: yordy/postgres:v17.0
     environment:
       - POSTGRES_PASSWORD=secret
     ports:

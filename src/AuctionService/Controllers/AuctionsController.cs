@@ -62,10 +62,10 @@ public class AuctionsController : ControllerBase
         auction.Seller = User.Identity.Name;
 
         // NOTE: Data Consistency 
-        // Next 4 lines are treated as a transaction. Eaither they all work or don't work
+        // Next 4 lines are treated as a transaction. Eather they all work or don't work
         _context.Auctions.Add(auction);
         var newAuction = _mapper.Map<AuctionDto>(auction);
-        await _publishEndpoint.Publish(_mapper.Map<AuctionCreated>(newAuction));
+        await  _publishEndpoint.Publish(_mapper.Map<AuctionCreated>(newAuction));
         var result = await _context.SaveChangesAsync() > 0;
 
         if (!result) return BadRequest("Could not save changes to the DB");
