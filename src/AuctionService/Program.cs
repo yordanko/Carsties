@@ -50,7 +50,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         options.RequireHttpsMetadata = false;
         options.TokenValidationParameters.ValidateAudience = false;
         options.TokenValidationParameters.NameClaimType = "username";
-        options.TokenValidationParameters.ValidIssuers = new string [] {"http://localhost:5000", "identity-svc"};
+
+        //This is list of valid tocken issuer. It is needed because we can run in docker or in debug/run local pc
+        options.TokenValidationParameters.ValidIssuers = new string [] {"http://localhost:5000", "http://identity-svc"};
+        options.TokenValidationParameters.ValidateIssuerSigningKey = false;
+        //options.TokenValidationParameters.IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("abcdefghijklmnopqrstuvwxyz123456"));
         
     });
 

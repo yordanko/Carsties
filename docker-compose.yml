@@ -8,14 +8,14 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
   mongodb:
-    image: yordy/mongo
+    image: yordy/mongo:latest
     environment:
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=secret
     ports:
       - 27017:27017
     volumes:
-      - mongodata:/var/lib/monodb/data
+      - mongodata:/var/lib/mongodb/data
   rabbitmq:
     image: yordy/rabbitmq:3-management-alpine
     ports:
@@ -31,7 +31,7 @@ services:
       - ASPNETCORE_URLS=http://+:80
       - RabbitMq__Host=rabbitmq
       - ConnectionStrings__DefaultConnection=Server=postgres:5432;User Id=postgres;Password=secret;Database=auctions
-      - IdentityServiceUrl=http://identity-svc 
+      - IdentityServiceUrl=http://identity-svc
     ports:
       - 7001:80
     depends_on:
