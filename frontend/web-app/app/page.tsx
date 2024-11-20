@@ -1,9 +1,12 @@
+import Listings from "./auctions/Listings";
+import Listing from "./auctions/Listings";
 
 export default function Home() {
-  console.log('Server component')
   return (
     <div>
-      Content goes here!
+      <h3 className='text-3xl font-semibold'>
+      <Listings />
+      </h3>
     </div>
   );
 }
