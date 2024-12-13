@@ -30,6 +30,7 @@ internal static class HostingExtensions
                 options.Events.RaiseSuccessEvents = true;
                 if(builder.Environment.IsEnvironment("Docker"))
                 {
+                    //it must be the same as the one from identity server http://localhost:5000/.well-known/openid-configuration
                     //options.IssuerUri = "http://identity-svc"; 
                     options.IssuerUri = "http://localhost:5000";
                 }

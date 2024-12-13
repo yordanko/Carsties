@@ -8,6 +8,8 @@ type State = {
     searchValue:string
     orderBy:string
     filterBy:string
+    seller?:string
+    winner?:string
 }
 type Actions = {
     // NOTE: Partial<State>: It ays params can be one of pageNumber, pageSize,pageCount or searchTerm! 
@@ -22,7 +24,9 @@ const initialState: State = {
     searchTerm: '',
     searchValue: '',
     orderBy: 'make',
-    filterBy: 'live'
+    filterBy: 'live',
+    seller: undefined,
+    winner: undefined
 } 
 
 export const useParamsStore = create<State & Actions>()((set) => ({

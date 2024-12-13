@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import "./globals.css";
 import Navbar from "./nav/Navbar";
+import ToastProvider from "./providers/ToastProvider";
 
 
 
@@ -18,6 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        <ToastProvider />
         <Navbar />
         <main className='container mx-auto px-5 pt-10'>
           {children}

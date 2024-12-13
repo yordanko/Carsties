@@ -12,7 +12,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             id: 'id-server',
             clientId: "nextApp",
             clientSecret: "secret",
-            issuer: "http://localhost:5000",
+            issuer: "http://localhost:5000", //must be the same as http://localhost:5000/.well-known/openid-configuration
             authorization:{params:{
                     scope:'openid profile auctionApp'
                 }},
