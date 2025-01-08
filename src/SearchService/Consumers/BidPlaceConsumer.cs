@@ -8,7 +8,7 @@ namespace SearchService.Consumers
     {
         public async Task Consume(ConsumeContext<BidPlaced> context)
         {
-            Console.WriteLine("--> Consuming bid placed");
+            Console.WriteLine("Search --> Consumming bid placed");
             var auction = await DB.Find<Item>().OneAsync(context.Message.AuctionId);
             if( context.Message.BidStatus.Contains("Accepted") 
                 && context.Message.Amount > auction.CurrentHighBid)

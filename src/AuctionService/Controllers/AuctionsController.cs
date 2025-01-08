@@ -89,6 +89,7 @@ public class AuctionsController : ControllerBase
         auction.Item.Color = updateAuctionDto.Color ?? auction.Item.Color;
         auction.Item.Mileage = updateAuctionDto.Mileage ?? auction.Item.Mileage;
         auction.Item.Year = updateAuctionDto.Year ?? auction.Item.Year;
+        
 
         var actionUpdate = _mapper.Map<AuctionUpdated>(auction);
         actionUpdate.Id = id.ToString(); 
