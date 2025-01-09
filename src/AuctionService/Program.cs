@@ -59,6 +59,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         
     });
 
+//add gRPC
 builder.Services.AddGrpc();
 
 var app = builder.Build();
@@ -68,6 +69,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+//Register mapping grpc
 app.MapGrpcService<GrpcAuctionService>();
 
 try

@@ -59,25 +59,7 @@ services:
       - 7002:80
     depends_on:
       - mongodb
-      - rabbitmq
-
-  bid-svc:
-    image: yordy/bid-svc:latest
-    build:
-      context: .
-      dockerfile: src/BiddingService/Dockerfile
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development 
-      - ASPNETCORE_URLS=http://+:80
-      - RabbitMq__Host=rabbitmq
-      - ConnectionStrings__BidDbConnection=mongodb://root:secret@mongodb
-      - IdentityServiceUrl=http://identity-svc
-      - GrpcAuction=http://auction-svc:7777
-    ports:
-      - 7003:80
-    depends_on:
-      - mongodb
-      - rabbitmq
+      - rabbitmq  
 
   identity-svc:
     image: yordy/identity-svc:latest
@@ -103,6 +85,25 @@ services:
       - ASPNETCORE_URLS=http://+:80
     ports:
       - 6001:80
+# bidding service
+  bid-svc:
+    image: yordy/bid-svc:latest
+    build:
+      context: .
+      dockerfile: src/BiddingService/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development 
+      - ASPNETCORE_URLS=http://+:80
+      - RabbitMq__Host=rabbitmq
+      - ConnectionStrings__BidDbConnection=mongodb://root:secret@mongodb
+      - IdentityServiceUrl=http://identity-svc
+      - GrpcAuction=http://auction-svc:7777
+    ports:
+      - 7003:80
+    depends_on:
+      - mongodb
+      - rabbitmq
+
 volumes:
   pgdata:
   mongodata:

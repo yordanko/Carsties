@@ -11,7 +11,9 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <!-- server gRpc package -->
     <PackageReference Include="Grpc.AspNetCore" Version="2.67.0" />
+    <!-- server gRpc package ends-->
     <PackageReference Include="MassTransit.EntityFrameworkCore" Version="8.2.2" />
     <PackageReference Include="MassTransit.RabbitMQ" Version="8.2.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.8" />
@@ -26,6 +28,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Contracts\Contracts.csproj" />
   </ItemGroup>
+  <!-- Next ItemGroup added manually, needed for gRPC to specify proto files-->
   <ItemGroup>
     <Protobuf Include="protos/auctions.proto" GrpcServices="Server"/>
   </ItemGroup>

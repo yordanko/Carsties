@@ -20,7 +20,11 @@ namespace BiddingService.Controllers
     public class BidsController: ControllerBase
     {
         private readonly IMapper _mapper;
+
+        //Access to mass transit to send notifications 
         private readonly IPublishEndpoint _publishEndpoint;
+
+        //Access to gRPC for synchronose comunication to other services generated from .proto file 
         private readonly GrpcAuctionClient _grpcClient;
 
         public BidsController(IMapper mapper, IPublishEndpoint publishEndpoint, GrpcAuctionClient grpcClient )
@@ -33,12 +37,16 @@ namespace BiddingService.Controllers
         [HttpPost]
         public async Task<ActionResult<BidDto>> PlaceBid(string auctionId, int amount) 
         {
+            //try to find auction in bidding service database
             var auction = await DB.Find<Auction>().OneAsync(auctionId);
             if(auction == null)
             {
+                //not found, then use gRPC (Google Remote Procedure Calls) to auction service and see if exists there
                 auction = _grpcClient.GetAuction(auctionId);
                 if (auction == null) return BadRequest("Can not accept bids on this auction at this time");
             }
+
+            //Cannot bid on your auctions
             if(auction.Seller == User.Identity.Name)
             {
                 return Forbid("You can not bid on your own auction");
@@ -77,6 +85,8 @@ namespace BiddingService.Controllers
             
             
             await DB.SaveAsync(bid);
+
+            //send a message to update currentHighBid in auction and search services
             await _publishEndpoint.Publish(bidPlaced);
 
             return Ok(bidPlaced);
@@ -92,6 +102,7 @@ namespace BiddingService.Controllers
 
 
             // return _mapper.Map<List<BidDto>>(bids);
+            //project to BidDto and return it
             return bids.Select(_mapper.Map<BidDto>).ToList();
         }
     }

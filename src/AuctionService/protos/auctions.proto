@@ -1,18 +1,22 @@
 syntax = "proto3";
+// Need to install vs code extension vscode-proto3 to check proper syntax on .proto file
+// Once project is build under folder: obj/Debug/net7.0/protos 
+// there will be classes: Auctions.cs & AuctionsGrpc.cs
 
 option csharp_namespace ="AuctionService";
 
 service GrpcAuction{
+    //rpc comes from client side
     rpc GetAuction(GetAuctionRequest) returns (GrpcAuctionResponse);
 }
 
 message GetAuctionRequest{
-    string id = 1;
+    string id = 1; //position 1
 }
 
 message GrpcAuctionModel{
-    string id =1;
-    string seller = 2;
+    string id =1;       //position 1
+    string seller = 2;  //position 2 and so on
     string auctionEnd = 3;
     int32 reservedPrice = 4;
 }

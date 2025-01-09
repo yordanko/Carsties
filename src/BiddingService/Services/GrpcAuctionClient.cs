@@ -8,6 +8,7 @@ using Grpc.Net.Client;
 
 namespace BiddingService.Services
 {
+    //This class is used as client for gRPC call
     public class GrpcAuctionClient
     {
         private readonly ILogger<GrpcAuctionClient> _logger;

@@ -8,6 +8,8 @@ using MassTransit.Monitoring.Performance.StatsD;
 
 namespace AuctionService.Services
 {
+    //This class is used in gRPC server call.
+    //Note: This class derived from GrpcAuction.GrpcAuctionBase which was generated when buid from .proto file in project
     public class GrpcAuctionService : GrpcAuction.GrpcAuctionBase
     {
         private readonly AuctionDbContext _dbContext;
@@ -17,6 +19,7 @@ namespace AuctionService.Services
             _dbContext = dbContext;
         }
 
+        //Must override this method. This method is decribed in .proto file
         public override async Task<GrpcAuctionResponse> GetAuction(GetAuctionRequest request, 
             ServerCallContext context)
             {

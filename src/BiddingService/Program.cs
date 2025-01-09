@@ -9,15 +9,17 @@ using BiddingService.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
+
+//Configure Automapper. Package: AutoMapper.Extensions.Microsoft.DependencyInjection
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 //Configure MassTransit. Package: MassTransit.RabbitMQ
 builder.Services.AddMassTransit(x=>
 {
+    //configure location were mass transit classes are 
     x.AddConsumersFromNamespaceContaining<AuctionCreatedConsumer>();
-    //add dashes in formater as "a-b-c" for consumer names
+    //add dashes in formater as "a-b-c" for consumer names, prefix with bids
     x.SetEndpointNameFormatter(new KebabCaseEndpointNameFormatter("bids", false));
 
     x.UsingRabbitMq((context, cfg)=>
@@ -50,7 +52,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
+//register background service to check for finished auctions
 builder.Services.AddHostedService<CheckAuctionFinished>();
+
+//register gRPC client
 builder.Services.AddScoped<GrpcAuctionClient>();
 
 var app = builder.Build();

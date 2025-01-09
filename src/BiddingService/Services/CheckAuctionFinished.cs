@@ -9,6 +9,9 @@ using MongoDB.Entities;
 
 namespace BiddingService.Services
 {
+    //Derived from base class for implementing a long running service: BackgroundService
+    //It runs as singleton. Runs when application starts up and stops when application shuts down
+    //It must implement ExecuteAsync method
     public class CheckAuctionFinished : BackgroundService
     {
         private readonly ILogger<CheckAuctionFinished> _logger;
@@ -22,6 +25,8 @@ namespace BiddingService.Services
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             _logger.LogInformation("Starting Check for finished auctions");
+            
+            //Register a deligate when cancelation is called
             stoppingToken.Register(() => _logger.LogInformation("==> Auction check is stopping"));
 
             while(!stoppingToken.IsCancellationRequested)
@@ -38,6 +43,8 @@ namespace BiddingService.Services
             .Match(x=> !x.Finished)
             .ExecuteAsync(stoppingToken);
 
+            //Create a scope to access IPublishEndpoint, because it is different from Background service 
+            //masstransit scope is scoped to the request
             if(finishedAuctions.Count == 0) return;
             _logger.LogInformation($"==> Found {finishedAuctions.Count} auctions that have completed ");
             using var scope =_services.CreateScope();
