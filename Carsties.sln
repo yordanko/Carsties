@@ -20,6 +20,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GatewayService", "src\Gatew
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BiddingService", "src\BiddingService\BiddingService.csproj", "{816459F7-0F33-48A6-BC4C-8555F7BB8814}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotificationService", "src\NotificationService\NotificationService.csproj", "{3B868661-CA95-4CDB-A897-894285A3FBBD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,6 +52,10 @@ Global
 		{816459F7-0F33-48A6-BC4C-8555F7BB8814}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{816459F7-0F33-48A6-BC4C-8555F7BB8814}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{816459F7-0F33-48A6-BC4C-8555F7BB8814}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B868661-CA95-4CDB-A897-894285A3FBBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B868661-CA95-4CDB-A897-894285A3FBBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B868661-CA95-4CDB-A897-894285A3FBBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B868661-CA95-4CDB-A897-894285A3FBBD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -61,6 +67,7 @@ Global
 		{56C99CCA-AE32-42B7-BC63-C1D4DCAF6CCD} = {FC4D3441-E373-47BA-9E26-29EA79167CEB}
 		{748495E9-1850-4DCA-AE6A-AFF7B4F7E928} = {FC4D3441-E373-47BA-9E26-29EA79167CEB}
 		{816459F7-0F33-48A6-BC4C-8555F7BB8814} = {FC4D3441-E373-47BA-9E26-29EA79167CEB}
+		{3B868661-CA95-4CDB-A897-894285A3FBBD} = {FC4D3441-E373-47BA-9E26-29EA79167CEB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FB3E387C-A69E-4460-B50B-D57164E1A40F}

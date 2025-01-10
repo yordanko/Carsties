@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,9 +16,15 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         //options.TokenValidationParameters.ValidIssuers = new string [] {"http://localhost:5000", "http://identity-svc"};
     });
 
-
+//Add Cors policy. Needed for browser to SingleR server connection
+builder.Services.AddCors(options => {
+    options.AddPolicy("customPolicy", b => {
+        b.AllowAnyHeader().AllowAnyMethod().AllowCredentials()
+        .WithOrigins(builder.Configuration["ClientApp"]);
+    });
+});
 var app = builder.Build();
-
+app.UseCors();
 app.MapReverseProxy();
 app.UseAuthentication();
 app.UseAuthorization();
